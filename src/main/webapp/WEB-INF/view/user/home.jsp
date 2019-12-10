@@ -4,21 +4,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="/resource/bootstrap-4.3.1/css/bootstrap-grid.css">
-<script type="text/javascript" src="/resource/bootstrap-4.3.1/js/bootstrap.js"></script>
+<script type="text/javascript" src=></script>
+<link rel="stylesheet" href="/resource/bootstrap/css/bootstrap.css">
+<script type="text/javascript" src="/resource/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/resource/bootstrap/js/bootstrap.js"></script> 
 <title>Insert title here</title>
 </head>
 <body>
-    <table>
-       <tr>
-           <td>A</td>
-           <td>A</td>
-       </tr>
-       <tr>
-           <td>C</td>
-           <td>C</td>
-       </tr>
-    
-    </table>
+      
+      
+   
+   
+   
 </body>
 </html>
