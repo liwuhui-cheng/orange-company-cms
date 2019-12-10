@@ -5,7 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>cms-lixuecheng</name>
-  <description>这是一个orange开发的项目系统，是一个十分帅气的orang哦</description>
+  <description>这是一个orange开发的项目系统,是一个十分帅气的orang哦</description>
 
   <!-- 定义主要版本号 -->
 	<properties>
