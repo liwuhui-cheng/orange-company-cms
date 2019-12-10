@@ -12,4 +12,11 @@ public class MyController {
 
 	 @Autowired
 	 private   MyService   service;
+	 
+	 
+	 @RequestMapping("home")
+	 public   String   home(){		 
+		 
+		 return  "user/home";		 
+	 }
 }
