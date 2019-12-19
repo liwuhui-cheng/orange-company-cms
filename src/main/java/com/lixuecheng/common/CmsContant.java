@@ -21,4 +21,7 @@ public class CmsContant {
 	
 	//文章的状态
 	public   static   final  int   ARTICLE_STATUS_DELETE=1;
+    
+	
+
 }

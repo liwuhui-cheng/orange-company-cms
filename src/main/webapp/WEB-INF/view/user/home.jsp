@@ -22,12 +22,10 @@
     .menuselected li{
         background:#4DFFFF;
     }
-
     .mymenuselected li:hover {
       
       background:#FFA042;
     }
-
 </style>
 
 </head>

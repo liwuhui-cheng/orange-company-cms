@@ -178,7 +178,7 @@ public class UserController {
 	     
 	      // articlePage.getPages();
 		 request.setAttribute("articlePage", articlePage);
-		 return  "/user/article/list";
+		 return  "user/article/list";
 		 
 	 }
 	 /**
@@ -304,9 +304,9 @@ public class UserController {
 	 }
 	 
 	 /**
-	  * 跳转到 修改文章的页面h
+	  * 跳转到 修改文章的页面
 	  */
-	 @RequestMapping("updateArticle")
+	 @RequestMapping(value="updateArticle",method=RequestMethod.GET)
 	 public    String   updateArticle(HttpServletRequest request,int id)     {
 		 
 		 //获取栏目
@@ -325,9 +325,47 @@ public class UserController {
 	     
 	     request.setAttribute("article", article);
 	     
-	 	 request.setAttribute("content1","");
-		 return  "/user/article/post";
+	 	// request.setAttribute("content1",HtmlUtiles.htmlspecialchars(article.getContent()));
+	 	 
+		 return  "/user/article/update";
 	 }
 	 
 	 
+	 /**
+	  * 接收修改文章的页面数据
+	  */
+	 @RequestMapping(value="updateArticle",method=RequestMethod.POST)
+	 @ResponseBody
+	 public    boolean   updateArticle(HttpServletRequest request,Acticle article,MultipartFile file)     {
+		 
+		 String picUrl;
+			try {
+				// 处理上传文件
+				picUrl = processFile(file);
+				article.setPicture(picUrl);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//当前用户是文章的作者
+			User loginUser = (User)request.getSession().getAttribute(CmsContant.USER_KEY);
+			//article.setUserId(loginUser.getId());
+			int updateREsult  = artcleService.update(article,loginUser.getId());
+			
+			
+			return updateREsult>0;
+	 }
+	 
+	 
+	 @RequestMapping("logout")
+	 public   String   home(HttpServletRequest request) {
+		 
+		 request.getSession().removeAttribute(CmsContant.USER_KEY);
+		 
+		 return  "redirect:/";
+	 }
 }

@@ -13,6 +13,11 @@ javaType="com.lixuecheng.entity.Channel" select="findChannel"></association>
 		
 		<association property="category" column="category_id"
 javaType="com.lixuecheng.entity.Category" select="findCategory"></association>
+        
+        <association property="user" column="user_id" javaType="com.lixuecheng.entity.User"
+        
+        
+      select="com.lixuecheng.mapper.UserMapper.findUserById" />
 
 	</resultMap>
 
@@ -34,5 +39,71 @@ javaType="com.lixuecheng.entity.Category" select="findCategory"></association>
 	<select id="findCategory"  resultType="category">
 	  select   id,name  from   cms_category   where   id=#{id};
 	</select>
+
+    <select id="getById" resultMap="articleMapper">
+    
+      select   *  from   cms_article  where   id=#{id}   and   deleted=0
+    
+    </select>
+    
+    <select id="list"  resultMap="articleMapper">
+    
+      select   id,title,channel_id,category_id,user_id,created,status,hot ,picture   
+       
+       from    cms_article 
+       
+       where   status=#{value}  and  deleted=0  order  by  id  desc
+      
+    
+    </select>
+    
+    <!-- 获取热门文章 -->
+    <select id="hotList"  resultMap="articleMapper">
+      
+      select   id,title,channel_id,category_id,user_id,created,status,hot,picture  
+       
+      from    cms_article 
+       
+      where   status=1  and  deleted=0 
+         
+       AND   hot = 1
+       
+       order  by  id  desc
+    </select>
+    
+    <!-- 最新文章 -->
+    <select id="lastList"  resultMap="articleMapper">
+        select   id,title,channel_id,category_id,user_id,created,status,hot  ,picture  
+       
+      from    cms_article 
+       
+      where   status=1  and  deleted=0 
+         
+       AND   hot = 1
+       
+       order  by  id  desc
+        
+        LIMIT  #{value}
+    
+    </select>
+    
+    <select id="getArticles"  resultMap="articleMapper">
+    
+     select   id,title,channel_id,category_id,user_id,created,status,hot,picture  
+       
+      from    cms_article 
+       
+      where   status=1  and  deleted=0 
+         
+     AND   channel_id=#{channelId}
+      
+      
+         <if test="catId!=0">
+           AND category_id=#{catId}
+         </if>
+       order  by  id  desc
+    
+    </select>
+    
 
 </mapper>

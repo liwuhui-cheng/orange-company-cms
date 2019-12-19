@@ -4,6 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.lixuecheng.mapper.UserMapper">
  
-  
+   <select id="findUserById" resultType="user">
+     
+     select  id,username   from  cms_user  where   id=#{value}
+     
+   </select>
   
   </mapper>

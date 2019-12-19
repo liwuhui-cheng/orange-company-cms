@@ -65,7 +65,6 @@
      
      
 <script type="text/javascript">
-
    function del(id) {
 	   alert(id);
 	   if(confirm("您确定删除吗???")){	   
@@ -83,16 +82,12 @@
       /**
                      分页函数
       */
-
     function gopage(pageNum) {
 		$("#workcontent").load("/user/articles?pageNum="+pageNum)
 	}
       
       function upd(id) {
-		
+    	  $("#workcontent").load("/user/updateArticle?id="+id);
     	  
 	}
 </script>
-
-
- 
