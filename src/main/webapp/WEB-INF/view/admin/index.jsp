@@ -53,7 +53,7 @@
 				  </li>
 			
 				  <li class="nav-item">
-				    <a class="nav-link" href="#" onclick="showWork($(this),'/admin/comment')"  >评论管理</a>
+				    <a class="nav-link" href="#" onclick="showWork($(this),'/admin/commten')"  >评论管理</a>
 				  </li>
 				  
 				  <li class="nav-item">

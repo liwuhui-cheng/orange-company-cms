@@ -116,4 +116,7 @@ public interface ArtcleMapper {
 			+ " LEFT JOIN cms_user as u ON u.id=c.userId "
 			+ " WHERE articleId=#{value} ORDER BY c.created DESC")
 	List<Comment> getComments(int artcleId);
+
+	
+	
 }

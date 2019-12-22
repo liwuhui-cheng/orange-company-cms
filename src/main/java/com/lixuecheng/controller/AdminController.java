@@ -1,5 +1,7 @@
 package com.lixuecheng.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import com.github.pagehelper.PageInfo;
 import com.lixuecheng.common.CmsError;
 import com.lixuecheng.common.CmsMessage;
 import com.lixuecheng.entity.Acticle;
+import com.lixuecheng.entity.Comment;
 import com.lixuecheng.service.ArtcleService;
 
 @RequestMapping("admin")
@@ -102,7 +105,7 @@ public class AdminController {
 	@ResponseBody
 	public   CmsMessage   setArticeStatus(int id,int status) {
 		
-		System.out.println("1111111"+id+"22222222"+status);
+		
 		/**
 		 * 数据合法性校验
 		 */
@@ -136,4 +139,5 @@ public class AdminController {
 	}
 	
 	
+
 }

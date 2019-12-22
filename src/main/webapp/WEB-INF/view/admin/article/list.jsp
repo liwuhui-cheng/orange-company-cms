@@ -4,7 +4,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- <link rel="stylesheet"  href="/resource/css/style.css"> -->
-     <table  class="table">
+     <table  class="table" style="width:1300px;margin-top: 30px;">
          <thead>
             <tr>
                 <th>ID</th>
@@ -55,8 +55,8 @@
      
       <nav aria-label="Page navigation example">
 		  <ul class="pagination justify-content-center">
-		    <li class="page-item disabled">
-		      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+		    <li class="page-item">
+		      <a class="page-link" onclick="gopage(${articlePage.prePage})">Previous</a>
 		    </li>
 		   	<c:forEach begin="1" end="${articlePage.pages}" varStatus="i">
 		   		<li class="page-item"><a class="page-link" href="javascript:void()" onclick="gopage(${i.index})">${i.index}</a></li>
@@ -64,7 +64,7 @@
 		    
 		   
 		    <li class="page-item">
-		      <a class="page-link" href="#">Next</a>
+		      <a class="page-link" onclick="gopage(${articlePage.nextPage})">Next</a>
 		    </li>
 		  </ul>
 		</nav>
@@ -129,7 +129,7 @@
       **/
     function gopage(pageNum) {
     	  
-		$("#workcontent").load("/admin/article?pageNum="+pageNum + "&status="+${status});
+		$("#workcontent").load("/admin/article?pageNum="+pageNum + "&status="+'${status}');
 	}
       
       /**
