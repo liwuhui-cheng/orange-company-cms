@@ -335,10 +335,20 @@ public class UserController extends  BaseController{
 	 
 	 
 	 @RequestMapping("logout")
-	 public   String   home(HttpServletRequest request) {
+	 public   String   home(HttpServletRequest request,HttpServletResponse response) {
 		 
 		 request.getSession().removeAttribute(CmsContant.USER_KEY);
-		 
-		 return  "redirect:/";
+			
+			
+			Cookie cookieUserName = new Cookie("username", "");
+			cookieUserName.setPath("/");
+			cookieUserName.setMaxAge(0);// 立即过期
+			response.addCookie(cookieUserName);
+			Cookie cookieUserPwd = new Cookie("userpwd", "");
+			cookieUserPwd.setPath("/");
+			cookieUserPwd.setMaxAge(0);// 立即过期
+			response.addCookie(cookieUserPwd);
+			
+			return "redirect:/";
 	 }
 }
