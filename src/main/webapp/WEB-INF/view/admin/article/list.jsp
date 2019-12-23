@@ -43,6 +43,7 @@
                      <td width="200px">
                          <input type="button"  value="刪除"  onclick="del(${p.id})">
                          <input type="button"  value="审核"  onclick="check(${p.id})">
+                         <input type="button" value="管理投诉"  class="btn btn-warning" onclick="complainList(${p.id})" >
                      
                      </td>
                  
@@ -85,6 +86,9 @@
          	<div class="row" id="divOptions" ></div>
          	<div class="row" id="divContent"></div>		
       </div>
+      
+        
+      
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
         <button type="button" class="btn btn-primary" onclick="setStatus(1)">审核通过</button>
@@ -97,9 +101,28 @@
 </div>
      
      
-     
-     
-      
+<!-- 查看投书 -->
+<div class="modal fade"   id="complainModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="margin-left:100px;">
+    <div class="modal-content" style="width:1200px;" >
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">文章审核</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="complainListDiv">
+         
+         		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" onclick="setStatus(1)">审核通过</button>
+        <button type="button" class="btn btn-primary" onclick="setStatus(2)">审核拒绝</button>
+      </div>
+    </div>
+  </div>
+</div>
      
 <script>
    var global_article_id;
@@ -108,6 +131,17 @@
    $('#articleContent').on('hidden.bs.modal',function(e){
 	   refreshPage();
    })
+   
+   
+   /**
+	* 查看文章的投诉
+	*/
+	function complainList(id){
+		$("#complainModal").modal('show')
+		$("#complainListDiv").load("/article/complains?articleId="+id);
+		
+	}
+   
    
    function del(id) {
 	   alert(id);
@@ -200,9 +234,7 @@
      			global_article_id=msg.data.id;
      			return;
      		}
-     		alert(msg.error)
-     		
-     		
+     		alert(msg.error);  		
      	},"json");
 		
    	  $('#articleContent').modal('toggle');

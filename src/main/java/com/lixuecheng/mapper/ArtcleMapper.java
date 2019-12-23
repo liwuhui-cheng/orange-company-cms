@@ -12,6 +12,7 @@ import com.lixuecheng.entity.Acticle;
 import com.lixuecheng.entity.Category;
 import com.lixuecheng.entity.Channel;
 import com.lixuecheng.entity.Comment;
+import com.lixuecheng.entity.Complain;
 import com.lixuecheng.entity.Slide;
 
 public interface ArtcleMapper {
@@ -116,6 +117,16 @@ public interface ArtcleMapper {
 			+ " LEFT JOIN cms_user as u ON u.id=c.userId "
 			+ " WHERE articleId=#{value} ORDER BY c.created DESC")
 	List<Comment> getComments(int artcleId);
+
+	//
+	@Insert("INSERT  into  cms_complain    values(null,#{articleId},#{userId},#{complainType},#{compainOption},#{srcUrl},#{picture},#{content},#{email},#{mobile},now())")
+	int addCoplain(Complain compain);
+
+	//
+	@Update("UPDATE  cms_article   SET   complainCnt=complainCnt+1,STATUS=IF(complainCnt>10,2,STATUS)  WHERE  id=#{value}")
+	void increaseComplainCat(Integer articleId);
+
+	List<Complain> getComplains(int articleId);
 
 	
 	

@@ -2,11 +2,14 @@ package com.lixuecheng.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.github.pagehelper.PageInfo;
 import com.lixuecheng.entity.Acticle;
 import com.lixuecheng.entity.Category;
 import com.lixuecheng.entity.Channel;
 import com.lixuecheng.entity.Comment;
+import com.lixuecheng.entity.Complain;
 import com.lixuecheng.entity.Slide;
 
 /**
@@ -144,6 +147,12 @@ public interface ArtcleService {
 	 * @return
 	 */
 	PageInfo<Comment> getComments(int artcleId, int page);
+
+	int addComplian(Complain compain);
+
+	
+	//
+	PageInfo<Complain> getComplains(int articleId, int page);
 
 	
 

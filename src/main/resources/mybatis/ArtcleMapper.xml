@@ -52,7 +52,7 @@ javaType="com.lixuecheng.entity.Category" select="findCategory"></association>
        
        from    cms_article 
        
-       where   status=#{value}  and  deleted=0  order  by  id  desc
+       where     deleted=0  order  by  id  desc
       
     
     </select>
@@ -105,5 +105,21 @@ javaType="com.lixuecheng.entity.Category" select="findCategory"></association>
     
     </select>
     
+    <!--  -->
+    <resultMap type="complain" id="ComplainMapper">
+		<result column="article_id" property="articleId"/>
+		<result column="complain_type" property="complainType"/>
+		<result column="src_url" property="srcUrl"/>
+		<result column="compain_option" property="compainOption"/>
+		<result column="user_id" property="userId"/>
+		<association column="user_id" property="user" 
+			javaType="com.lixuecheng.entity.User"
+			select="com.lixuecheng.mapper.UserMapper.findUserById"
+		/>
+	</resultMap>
+	
+	<select id="getComplains" resultMap="ComplainMapper">
+		SELECT * FROM cms_complain where article_id=#{value}
+	</select>
 
 </mapper>

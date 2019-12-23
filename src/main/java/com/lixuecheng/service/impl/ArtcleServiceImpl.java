@@ -12,6 +12,7 @@ import com.lixuecheng.entity.Acticle;
 import com.lixuecheng.entity.Category;
 import com.lixuecheng.entity.Channel;
 import com.lixuecheng.entity.Comment;
+import com.lixuecheng.entity.Complain;
 import com.lixuecheng.entity.Slide;
 import com.lixuecheng.mapper.ArtcleMapper;
 import com.lixuecheng.mapper.SlideMapper;
@@ -203,6 +204,29 @@ public class ArtcleServiceImpl implements ArtcleService {
 		
 		  
 	}
+
+    //投诉
+	@Override
+	public int addComplian(Complain compain) {
+	
+    //添加投诉到数据库
+	   int i=artcleMapper.addCoplain(compain);
+	   //增加投诉的数量
+       if(i>0) {
+		   artcleMapper.increaseComplainCat(compain.getArticleId());
+	   }
+       
+      return   i;
+	}
+
+
+	@Override
+	public PageInfo<Complain> getComplains(int articleId, int page) {
+		
+		PageHelper.startPage(page, CmsContant.PAGE_SIZE);
+		
+		return  new PageInfo<Complain>(artcleMapper.getComplains(articleId));
+	} 
 
    
 }

@@ -1,17 +1,16 @@
 package com.lixuecheng.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,19 +28,12 @@ import com.lixuecheng.entity.Channel;
 import com.lixuecheng.entity.User;
 import com.lixuecheng.service.ArtcleService;
 import com.lixuecheng.service.UserService;
-import com.lixuecheng.test.FileUtils;
-import com.lixuecheng.test.HtmlUtiles;
+
 import com.lixuecheng.test.StringUtils;
 
 @Controller
 @RequestMapping("user")
-public class UserController {
-
-	@Value("${upload.path}")
-	String   picRootPath;
-	
-	@Value("pic.path")
-	String picUrl;
+public class UserController extends  BaseController{
 	
 	@Autowired
 	 private   UserService   service;
@@ -123,7 +115,9 @@ public class UserController {
 	  * @return
 	  */
 	 @RequestMapping(value="login",method=RequestMethod.POST)
-	 public  String    login2(HttpServletRequest request,User user) {
+	 public  String    login2(HttpServletRequest request,HttpServletResponse response,User user) {
+		 
+		 String  pwd=new  String(user.getPassword());
 		 
 		User  loginUser= service.login(user);
 		
@@ -134,7 +128,18 @@ public class UserController {
 		}
 		
 		request.getSession().setAttribute(CmsContant.USER_KEY, loginUser);
+		//2
+		Cookie cookie = new  Cookie("username", user.getUsername());
+		cookie.setPath("/");
+		cookie.setMaxAge(10*24*3600);
+	
+		 response.addCookie(cookie);
 		
+		Cookie cookie2 = new  Cookie("userpwd", pwd);
+		cookie2.setPath("/");
+		cookie2.setMaxAge(10*24*3600);
+		
+		response.addCookie(cookie2);
 		//进入管理界面
 		if(loginUser.getRole()==CmsContant.USER_ROLE_ADMIN) {
 			return  "redirect:/admin/index";	
@@ -269,39 +274,7 @@ public class UserController {
 		     
 	 }
 	 
-	 /**、
-	  * 判断文章目录是否存在以及重新命名
-	  * @param file
-	  * @return
-	  * @throws IllegalStateException
-	  * @throws IOException
-	  */
-	 private   String   processFile(MultipartFile  file ) throws IllegalStateException, IOException {
-		 //判断当前目录是否存在
-		 //picRootPath+""
-		 
-		 SimpleDateFormat sdf = new  SimpleDateFormat("yyyyMMdd");
-		 
-		 //当前日期
-		 String format = sdf.format(new Date());
-		 //图片存放的地址
-		 File file2 = new  File(picRootPath+"/"+format);
-		  //判断是否存在
-		 if(!file2.exists()) {
-			 //不存在创建
-			 file2.mkdirs();
-		 }
-		 //新文件名称
-		 String suffixName = FileUtils.getSuffixName(file.getOriginalFilename());
-		 //随机生成文件名
-	     String   fileName= UUID.randomUUID().toString() +suffixName;
-		
-	     //文件另存
-	    file.transferTo(new File(picRootPath+"/"+format+"/"+fileName));
-		 
-	    
-	    return  picUrl+ format+"/"+fileName;
-	 }
+	
 	 
 	 /**
 	  * 跳转到 修改文章的页面

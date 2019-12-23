@@ -23,11 +23,11 @@ public class User implements Serializable{
 
 	@NotBlank(message="用户名不能为空")
 	@Size(min=2,max=12,message="用户名不能小于2大于12")
-	private String username;
+	private String username=null;
      
 	@NotBlank(message="密码不能为空")
 	@Size(min=2,max=10,message="不能超出范围")
-	private String password;
+	private String password=null;
 
 	private String nickname;
 	private Date birthday;
