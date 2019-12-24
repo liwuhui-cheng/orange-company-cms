@@ -4,6 +4,15 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <link rel="stylesheet"  href="/resource/css/style.css">
+      <form action="">
+                 查询审核状态:<select name="status">
+             <option value="-1">-请选择-</option>
+             <option value="1">审核通过</option>
+             <option value="2">审核被拒</option>
+              <option value="3">待审核</option>
+             </select>
+             <input type="submit"  value="查询">
+      </form>
      <table  class="table">
          <thead>
             <tr>

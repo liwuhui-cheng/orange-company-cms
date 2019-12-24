@@ -33,9 +33,9 @@
     <div>
          <ul class="nav">
          	<li class="nav-item nav-link"> <img width="50px" height="55px" src="/resource/images/t2.jpg"> </li>
-            <li class="nav-item nav-link">A</li>
-            <li class="nav-item nav-link">B</li>
-            <li class="nav-item nav-link">C</li>
+            <li class="nav-item nav-link">山隔壁还是山</li>
+            <li class="nav-item nav-link">你成仙</li>
+            <li class="nav-item nav-link">我替你留守人间</li>
          
          </ul>
     
@@ -48,6 +48,10 @@
 		<div class="col-md-2" style="margin-top:20px ; border-right:solid 2px"> 
 			<!-- 左侧的菜单 -->
 			<ul class="nav flex-column mymenuselected">
+			
+			     <li class="nav-item ">
+			    <a  class="nav-link active" href="/index">首页</a>
+			     </li>
 				  <li class="nav-item">
 				    <a class="nav-link active" href="#"  onclick="showWork($(this),'/admin/article?status=0&pageNum=1')">文章管理</a>
 				  </li>

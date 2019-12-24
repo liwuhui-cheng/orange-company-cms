@@ -69,7 +69,7 @@ public interface ArtcleMapper {
 	 * @param status
 	 * @return 
 	 */
-	List<Acticle> list(int status);
+	List<Acticle> list(@Param("status")int status);
 
 	/**
 	 * 获取状态参数值是否合法
@@ -127,6 +127,8 @@ public interface ArtcleMapper {
 	void increaseComplainCat(Integer articleId);
 
 	List<Complain> getComplains(int articleId);
+
+	
 
 	
 	

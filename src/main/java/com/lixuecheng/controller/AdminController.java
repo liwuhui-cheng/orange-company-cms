@@ -41,8 +41,8 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping("article")
-	public   String   article(HttpServletRequest request,@RequestParam(defaultValue="0")int status,@RequestParam(defaultValue="1")int pageNum) {
-		
+	public   String   article(HttpServletRequest request,@RequestParam(defaultValue="-1")int status,@RequestParam(defaultValue="1")int pageNum) {
+		//System.out.println("111111111111"+status);
 	PageInfo<Acticle>  articlePage=	artcleService.list(status, pageNum);
 	
 	request.setAttribute("status",status);

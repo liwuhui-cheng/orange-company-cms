@@ -52,7 +52,12 @@ javaType="com.lixuecheng.entity.Category" select="findCategory"></association>
        
        from    cms_article 
        
-       where     deleted=0  order  by  id  desc
+       where   deleted=0
+         <if test="status!=-1">
+              And  status=#{status}
+         </if>
+       
+         order  by  id  desc
       
     
     </select>
@@ -122,4 +127,12 @@ javaType="com.lixuecheng.entity.Category" select="findCategory"></association>
 		SELECT * FROM cms_complain where article_id=#{value}
 	</select>
 
+   
+   
+   
+   
+   
+   
+   
+   
 </mapper>

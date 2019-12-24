@@ -4,6 +4,15 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- <link rel="stylesheet"  href="/resource/css/style.css"> -->
+
+ <select id="status">
+    <option value="-1" ${status=='-1'?'selected':''}>全部</option>
+	<option value="0" ${status==0?'selected':'' }>待审核</option>
+	<option value="1" ${status==1?'selected':'' }>审核通过</option>
+	<option value="2" ${status==2?'selected':'' }>审核被拒</option>
+	
+ </select>
+ <input type="button" value="查询" onclick="getstatus()">
      <table  class="table" style="width:1300px;margin-top: 30px;">
          <thead>
             <tr>
@@ -43,8 +52,8 @@
                      <td width="200px">
                          <input type="button"  value="刪除"  onclick="del(${p.id})">
                          <input type="button"  value="审核"  onclick="check(${p.id})">
-                         <input type="button" value="管理投诉"  class="btn btn-warning" onclick="complainList(${p.id})" >
-                     
+                        <%--  <input type="button" value="管理"  class="btn btn-warning" onclick="complainList(${p.id})" > --%>
+                         
                      </td>
                  
                  </tr>
@@ -134,13 +143,15 @@
    
    
    /**
-	* 查看文章的投诉
+	* 查看文章的1
 	*/
 	function complainList(id){
+		global_article_id=id;
 		$("#complainModal").modal('show')
 		$("#complainListDiv").load("/article/complains?articleId="+id);
 		
 	}
+ 
    
    
    function del(id) {
@@ -166,6 +177,9 @@
 		$("#workcontent").load("/admin/article?pageNum="+pageNum + "&status="+'${status}');
 	}
       
+    function getstatus(){
+		$("#workcontent").load("/admin/article?status="+$("#status").val());
+	}
       /**
       * 审核状态
       *
@@ -182,6 +196,7 @@
     			  alert("操作成功!");
     			  //隐藏当前的模态框
     			  $('#articleContent').modal('hide')
+    			  $('#complainModal').modal('hide')
     			  //刷新当前页面
     			  //refreshPage();
     			  return;	

@@ -133,7 +133,7 @@ public class UserController extends  BaseController{
 		cookie.setPath("/");
 		cookie.setMaxAge(10*24*3600);
 	
-		 response.addCookie(cookie);
+		response.addCookie(cookie);
 		
 		Cookie cookie2 = new  Cookie("userpwd", pwd);
 		cookie2.setPath("/");
