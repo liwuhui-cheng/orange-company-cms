@@ -9,7 +9,9 @@ import com.lixuecheng.entity.Acticle;
 import com.lixuecheng.entity.Category;
 import com.lixuecheng.entity.Channel;
 import com.lixuecheng.entity.Comment;
+import com.lixuecheng.entity.Commpan;
 import com.lixuecheng.entity.Complain;
+import com.lixuecheng.entity.Condtion;
 import com.lixuecheng.entity.Slide;
 
 /**
@@ -153,6 +155,22 @@ public interface ArtcleService {
 	
 	//
 	PageInfo<Complain> getComplains(int articleId, int page);
+
+	
+	//
+	int addCopan(Commpan commpan);
+
+	//查询投诉
+	List<Commpan> listTs(Condtion con);
+
+	 List<Commpan> comList(int id);
+
+	List<Commpan> tsNum1();
+
+	//查询投诉数量
+	List<Commpan> listPan();
+
+	List<Commpan> tsNum2();
 
 	
 	

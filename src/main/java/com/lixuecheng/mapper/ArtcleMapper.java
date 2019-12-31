@@ -12,7 +12,9 @@ import com.lixuecheng.entity.Acticle;
 import com.lixuecheng.entity.Category;
 import com.lixuecheng.entity.Channel;
 import com.lixuecheng.entity.Comment;
+import com.lixuecheng.entity.Commpan;
 import com.lixuecheng.entity.Complain;
+import com.lixuecheng.entity.Condtion;
 import com.lixuecheng.entity.Slide;
 
 public interface ArtcleMapper {
@@ -123,13 +125,28 @@ public interface ArtcleMapper {
 	int addCoplain(Complain compain);
 
 	//
-	@Update("UPDATE  cms_article   SET   complainCnt=complainCnt+1,STATUS=IF(complainCnt>10,2,STATUS)  WHERE  id=#{value}")
-	void increaseComplainCat(Integer articleId);
+
 
 	List<Complain> getComplains(int articleId);
 
-	
+	@Insert("insert   into   cms2__complain (id,article_id,user_id,complaintype,urlip)   values(null,#{article_id},#{user_id},#{complaintype},#{urlip}) ")
+	int addCopan(Commpan commpan);
 
+	
+	@Update("UPDATE  cms_article   SET   complainnum=complainnum+1,STATUS=IF(complainnum>10,2,STATUS)  WHERE  id=#{value}")
+	void increaseComplainCat(Integer articleId);
+
+	
+	List<Commpan> listTs(Condtion con);
+   // @Select("SELECT   *   FROM    cms2__complain	WHERE  id=#{id}")
+	 List<Commpan> comList(int id);
+
+	List<Commpan> tsNum1();
+
+	//查询投诉数
+	List<Commpan> listPan();
+
+	List<Commpan> tsNum2();
 	
 	
 }

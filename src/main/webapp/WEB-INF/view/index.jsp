@@ -8,6 +8,15 @@
 <link rel="stylesheet" href="/resource/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="/resource/js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="/resource/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript">
+    function add() {
+		
+    	location="article/ts";
+	}
+
+
+</script>
+
 <script type="text/javascript"
 	src="/resource/js/jqueryvalidate/jquery.validate.js"></script>
 <script type="text/javascript"
@@ -71,11 +80,12 @@ body {
 					</ul>
 
 				</div>
+				
 			</div>
-
+            <!--     <a herf="https://www.csdn.net/nav/career">博客链接</a> -->
 			<!-- 中间 -->
 			<div class="col-md-7">
-
+                
 				<!--  轮播图 -->
 				<div>
 					<div id="carouselExampleCaptions" class="carousel slide"
@@ -182,6 +192,7 @@ body {
 				<div class="card">
 					<div class="card-header">
 						<h4 style="color: red;">最新文章</h4>
+						<input type="button"  onblur="add()"  value="投诉">
 					</div>
 					<div class="card-body">
 						<ol>

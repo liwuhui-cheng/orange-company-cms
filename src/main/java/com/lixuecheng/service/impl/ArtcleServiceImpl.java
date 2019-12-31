@@ -12,7 +12,9 @@ import com.lixuecheng.entity.Acticle;
 import com.lixuecheng.entity.Category;
 import com.lixuecheng.entity.Channel;
 import com.lixuecheng.entity.Comment;
+import com.lixuecheng.entity.Commpan;
 import com.lixuecheng.entity.Complain;
+import com.lixuecheng.entity.Condtion;
 import com.lixuecheng.entity.Slide;
 import com.lixuecheng.mapper.ArtcleMapper;
 import com.lixuecheng.mapper.SlideMapper;
@@ -192,13 +194,13 @@ public class ArtcleServiceImpl implements ArtcleService {
 
 	}
 
-	// 投诉
+	// 
 	@Override
 	public int addComplian(Complain compain) {
 
-		// 添加投诉到数据库
+		//
 		int i = artcleMapper.addCoplain(compain);
-		// 增加投诉的数量
+		// 
 		if (i > 0) {
 			artcleMapper.increaseComplainCat(compain.getArticleId());
 		}
@@ -212,6 +214,51 @@ public class ArtcleServiceImpl implements ArtcleService {
 		PageHelper.startPage(page, CmsContant.PAGE_SIZE);
 
 		return new PageInfo<Complain>(artcleMapper.getComplains(articleId));
+	}
+
+	@Override
+	public int addCopan(Commpan commpan) {
+		
+		
+	  int i=	artcleMapper.addCopan(commpan);
+	  
+	  if(i>0) {
+		  artcleMapper.increaseComplainCat(commpan.getArticle_id());
+	  }
+		return i;
+	}
+
+	@Override
+	public List<Commpan> listTs(Condtion con) {
+		List<Commpan> list=artcleMapper.listTs(con);
+		
+		return list;
+	}
+
+	@Override
+	public  List<Commpan> comList(int id) {
+	
+		return artcleMapper.comList(id);
+	}
+
+	@Override
+	public List<Commpan> tsNum1() {
+		// TODO Auto-generated method stub
+		return artcleMapper.tsNum1();
+				
+	
+	}
+
+	@Override
+	public List<Commpan> listPan() {
+		
+		return artcleMapper.listPan();
+	}
+
+	@Override
+	public List<Commpan> tsNum2() {
+		
+		return artcleMapper.tsNum2();
 	}
 
 	

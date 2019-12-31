@@ -127,12 +127,57 @@ javaType="com.lixuecheng.entity.Category" select="findCategory"></association>
 		SELECT * FROM cms_complain where article_id=#{value}
 	</select>
 
+   <select id="listTs" resultType="com.lixuecheng.entity.Commpan">
+     
+     SELECT   *  FROM  cms2__complain  a  LEFT   JOIN   cms_article   b  ON  a.`user_id`=b.`user_id`
+     
+       <if test="mh1!=-1">
+         and   complaintype=#{mh1}    
+       </if>
+       <if test="mh2!=null  and  mh2!=''">
+            
+            and   complainnum>=#{mh2}
+              <if test="mh3!=null  and  mh3!=''">
+              and   complainnum&lt;=#{mh3}
+              </if>
+       </if>
+       
+        
+       
+     
+      ORDER BY  b.created DESC
+   </select>
+   
+   
+   <select id="tsNum1" resultType="com.lixuecheng.entity.Commpan">
+     
+  SELECT   *  FROM  cms2__complain  a  LEFT   JOIN   cms_article   b  ON  a.`user_id`=b.`user_id`
+     
+  ORDER BY  b.complainnum DESC
+   </select>
+    <select id="tsNum2" resultType="com.lixuecheng.entity.Commpan">
+     
+  SELECT   *  FROM  cms2__complain  a  LEFT   JOIN   cms_article   b  ON  a.`user_id`=b.`user_id`
+     
+  ORDER BY  b.complainnum ASC
+   </select>
    
    
    
+   <select id="listPan" resultType="com.lixuecheng.entity.Commpan">
+     
+  SELECT   *  FROM  cms2__complain  a  LEFT   JOIN   cms_article   b  ON  a.`user_id`=b.`user_id`
+     
+  ORDER BY  b.complainnum DESC   
+   </select>
    
    
-   
+  <select id="comList" resultType="com.lixuecheng.entity.Commpan">
+  
+  SELECT   *   FROM   cms2__complain  a  LEFT  JOIN   cms_article   b   ON   a.`article_id`=#{id}
+  
+
+   </select> 
    
    
 </mapper>

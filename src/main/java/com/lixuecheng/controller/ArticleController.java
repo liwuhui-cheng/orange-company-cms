@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +18,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.druid.util.StringUtils;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lixuecheng.common.CmsContant;
 import com.lixuecheng.common.CmsError;
 import com.lixuecheng.common.CmsMessage;
 import com.lixuecheng.entity.Acticle;
 import com.lixuecheng.entity.Comment;
+import com.lixuecheng.entity.Commpan;
 import com.lixuecheng.entity.Complain;
+import com.lixuecheng.entity.Condtion;
 import com.lixuecheng.entity.User;
 import com.lixuecheng.service.ArtcleService;
 import com.lixuecheng.test.FileUtils;
@@ -71,8 +75,13 @@ public class ArticleController extends BaseController {
 
 		Acticle acticle = artcleService.getById(id);
 
+		
+		
 		request.setAttribute("acticle", acticle);
 
+		
+	     List<Commpan>  pan=artcleService.listPan();
+	     request.setAttribute("pan",pan);
 		return "detail";
 	}
 
@@ -164,7 +173,7 @@ public class ArticleController extends BaseController {
 
 		}
 
-		// 加上投诉人
+		//
 		User loginUser = (User) request.getSession().getAttribute(CmsContant.USER_KEY);
 
 		String processFile = this.processFile(file);
@@ -181,17 +190,91 @@ public class ArticleController extends BaseController {
 
 		return "article/complain";
 	}
-	
+
 	@RequestMapping("complains")
-	public   String    complains(HttpServletRequest request,int articleId,@RequestParam(defaultValue="1") int page) {
-	  
-		PageInfo<Complain>  complianPage=artcleService.getComplains(articleId,page);
-		System.out.println("-------------------------"+complianPage);
-	    request.setAttribute("complianPage", complianPage);
-	  
-	  return "article/complainslist";
+	public String complains(HttpServletRequest request, int articleId, @RequestParam(defaultValue = "1") int page) {
+
+		PageInfo<Complain> complianPage = artcleService.getComplains(articleId, page);
+		System.out.println("-------------------------" + complianPage);
+		request.setAttribute("complianPage", complianPage);
+
+		return "article/complainslist";
+	}
+
+	@RequestMapping(value = "report", method = RequestMethod.GET)
+	public String report(HttpServletRequest request, int articleId) {
+
+		Acticle acticle = artcleService.getById(articleId);
+
+		request.setAttribute("acticle", acticle);
+
+		return "report/report";
+	}
+
+	@RequestMapping(value = "report", method = RequestMethod.POST)
+	public String report(HttpServletRequest request, Commpan commpan) {
+
+		if (!FileUtils.isHttpUrl(commpan.getUrlip())) {
+
+			commpan.setUrlip("0");
+
+		}
+
+		Acticle acticle = artcleService.getById(commpan.getUser_id());
+		request.setAttribute("acticle", acticle);
+		User loginUser = (User) request.getSession().getAttribute(CmsContant.USER_KEY);
+		if (loginUser != null) {
+			commpan.setUser_id(loginUser.getId());
+		} else {
+
+			commpan.getUser_id();
+		}
+	
+		int i = artcleService.addCopan(commpan);
+
+		return "report/report";
+	}
+
+	@RequestMapping("ts")
+	public String ts(HttpServletRequest request,Model  m,@RequestParam(defaultValue="1")int pageNum,Condtion con) {
+
+		// System.out.println("1111111111111111111111111");
+		PageHelper.startPage(pageNum, 3);
+		
+		List<Commpan> com = artcleService.listTs(con);
+
+	    PageInfo<Commpan> pageInfo = new	PageInfo<Commpan>(com);
+		
+		request.setAttribute("com", com);
+        m.addAttribute("pp", pageInfo);
+        m.addAttribute("con", con);
+		return "report/ts";
 	}
 	
+	@RequestMapping("comList")
+	   public  String    comList(int id,Model m) {
+		
+		 List<Commpan>  list=artcleService.comList(id);
+		
+		  m.addAttribute("list", list);
+		  return  "report/comList";
+	}
 	
+	//倒序，正序
+	@RequestMapping("tsNum1")
+	public   String  tsNum1(HttpServletRequest request) {
+		
+		List<Commpan> com =artcleService.tsNum1();
+		request.setAttribute("com", com);
+	  	return  "report/ts";
+	}
 	
+	@RequestMapping("tsNum2")
+	public   String  tsNum2(HttpServletRequest request) {
+		
+		List<Commpan> com =artcleService.tsNum2();
+		request.setAttribute("com", com);
+	  	return  "report/ts";
+	}
+
 }

@@ -28,8 +28,8 @@
                                   分类：    ${acticle.category.name}&nbsp;&nbsp;&nbsp;
                                   发表时间：<fmt:formatDate value="${acticle.created}"  pattern="yyyy-MM-dd"/> 
          </h5>
-            <%--  <a href="/article/complain?articleId=${acticle.id}">投诉</a> --%>
-            
+            <a href="/article/report?articleId=${acticle.id}">投诉文章</a> 
+          
          
           </div>
         

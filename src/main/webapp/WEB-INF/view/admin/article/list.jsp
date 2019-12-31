@@ -53,7 +53,7 @@
                          <input type="button"  value="刪除"  onclick="del(${p.id})">
                          <input type="button"  value="审核"  onclick="check(${p.id})">
                         <%--  <input type="button" value="管理"  class="btn btn-warning" onclick="complainList(${p.id})" > --%>
-                         
+                         <a href="/article/ts">投诉</a>
                      </td>
                  
                  </tr>
