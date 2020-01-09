@@ -26,7 +26,7 @@ public class ArticeListener implements MessageListener<String, String> {
 		//大标题id
 		int  random = (int) (Math.random()*(8-1)+1);
 		
-		acticle.setChannelId(random);
+		acticle.setChannelId(random);  
 		//查询大标题对应的小标题
 	    int[]  artcleid=artcleService.selectCategoryId(random);
 	    //分类id
