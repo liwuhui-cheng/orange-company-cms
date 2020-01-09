@@ -21,7 +21,7 @@ public class ArticeListener implements MessageListener<String, String> {
 		
 		System.err.println("收到了消息!!!!");
 		
-		//把json对象转成artice对象
+		//把json对象转成artice对象  
 		Acticle acticle = JSON.parseObject(value, Acticle.class);
 		//大标题id
 		int  random = (int) (Math.random()*(8-1)+1);
