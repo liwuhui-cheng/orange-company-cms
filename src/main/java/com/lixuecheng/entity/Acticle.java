@@ -1,8 +1,9 @@
 package com.lixuecheng.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Acticle {
+public class Acticle implements Serializable{
 
 	private Integer id;  //文章id
 	private String title;// 标题

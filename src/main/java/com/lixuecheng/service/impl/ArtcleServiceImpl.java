@@ -261,5 +261,11 @@ public class ArtcleServiceImpl implements ArtcleService {
 		return artcleMapper.tsNum2();
 	}
 
+	@Override
+	public int[] selectCategoryId(int random) {
+		
+		return  artcleMapper.selectCategoryId(random);
+	}
+
 	
 }

@@ -147,6 +147,11 @@ public interface ArtcleMapper {
 	List<Commpan> listPan();
 
 	List<Commpan> tsNum2();
+
+	
+	//
+	@Select("SELECT id   from cms_category  where channel_id=#{random}")
+	int[] selectCategoryId(int random);
 	
 	
 }

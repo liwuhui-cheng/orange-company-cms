@@ -172,6 +172,9 @@ public interface ArtcleService {
 
 	List<Commpan> tsNum2();
 
+	//根据文章大标题查询小标题
+	int[] selectCategoryId(int random);
+
 	
 	
 

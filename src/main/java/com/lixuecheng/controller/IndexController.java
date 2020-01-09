@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +22,11 @@ public class IndexController {
 
 	@Autowired
 	ArtcleService artcleService;
-
+   
+	@Autowired
+	RedisTemplate   redisTemplate;
+	 
+	
 	@RequestMapping(value= {"index","/"})
 	public String index(HttpServletRequest request, @RequestParam(defaultValue = "1") int page) throws Exception {
 
@@ -48,13 +53,32 @@ public class IndexController {
 
 		Thread t3 = new Thread() {
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 
 				// 获取最新文章
-				List<Acticle> lastArticle = artcleService.lastList();
-				request.setAttribute("lastArticle", lastArticle);
+				
+				//0:redis作为缓存优化最新文章
+                     
+				
+				//1:从redis查询最新文章
+				List<Acticle> range = redisTemplate.opsForList().range("new_articles", 0, -1);
+				//2：判断redis中查询的是否为空
+				if(range==null || range.size()==0) {
+			    	 
+					//3:如果为空,从mysql中查询最新文章
+					List<Acticle> lastArticle = artcleService.lastList();
+					System.out.println("从mysql中查询了...........");
+					redisTemplate.opsForList().leftPushAll("new_articles", lastArticle.toArray());
+					request.setAttribute("lastArticle", lastArticle);
 
+					//4:如果不为空,直接返回前台
+			     }else {
+			    	 System.out.println("从redis查询了...............");
+						request.setAttribute("lastArticle", range);
+
+			     }
 			}
 		};
 
