@@ -17,6 +17,7 @@ import com.lixuecheng.entity.Complain;
 import com.lixuecheng.entity.Condtion;
 import com.lixuecheng.entity.Slide;
 import com.lixuecheng.mapper.ArtcleMapper;
+import com.lixuecheng.mapper.ArticleRep;
 import com.lixuecheng.mapper.SlideMapper;
 import com.lixuecheng.service.ArtcleService;
 
@@ -35,6 +36,9 @@ public class ArtcleServiceImpl implements ArtcleService {
 
 	@Autowired
 	SlideMapper slideMapper;
+
+	@Autowired
+	ArticleRep articleRep;
 
 	@Override
 	public PageInfo<Acticle> listByUser(Integer id, int pageNum) {
@@ -194,13 +198,13 @@ public class ArtcleServiceImpl implements ArtcleService {
 
 	}
 
-	// 
+	//
 	@Override
 	public int addComplian(Complain compain) {
 
 		//
 		int i = artcleMapper.addCoplain(compain);
-		// 
+		//
 		if (i > 0) {
 			artcleMapper.increaseComplainCat(compain.getArticleId());
 		}
@@ -218,26 +222,25 @@ public class ArtcleServiceImpl implements ArtcleService {
 
 	@Override
 	public int addCopan(Commpan commpan) {
-		
-		
-	  int i=	artcleMapper.addCopan(commpan);
-	  
-	  if(i>0) {
-		  artcleMapper.increaseComplainCat(commpan.getArticle_id());
-	  }
+
+		int i = artcleMapper.addCopan(commpan);
+
+		if (i > 0) {
+			artcleMapper.increaseComplainCat(commpan.getArticle_id());
+		}
 		return i;
 	}
 
 	@Override
 	public List<Commpan> listTs(Condtion con) {
-		List<Commpan> list=artcleMapper.listTs(con);
-		
+		List<Commpan> list = artcleMapper.listTs(con);
+
 		return list;
 	}
 
 	@Override
-	public  List<Commpan> comList(int id) {
-	
+	public List<Commpan> comList(int id) {
+
 		return artcleMapper.comList(id);
 	}
 
@@ -245,27 +248,33 @@ public class ArtcleServiceImpl implements ArtcleService {
 	public List<Commpan> tsNum1() {
 		// TODO Auto-generated method stub
 		return artcleMapper.tsNum1();
-				
-	
+
 	}
 
 	@Override
 	public List<Commpan> listPan() {
-		
+
 		return artcleMapper.listPan();
 	}
 
 	@Override
 	public List<Commpan> tsNum2() {
-		
+
 		return artcleMapper.tsNum2();
 	}
 
 	@Override
 	public int[] selectCategoryId(int random) {
-		
-		return  artcleMapper.selectCategoryId(random);
+
+		return artcleMapper.selectCategoryId(random);
 	}
 
-	
+	@Override
+	public List<Acticle> esFind(String estitle) {
+
+		List<Acticle> esfind = articleRep.findByTitle(estitle);
+
+		return esfind;
+	}
+
 }

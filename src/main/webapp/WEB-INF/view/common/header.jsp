@@ -12,11 +12,15 @@
       </li> 
     </ul>
     
-    <form class="form-inline my-2 my-lg-0" style="margin-right:30%" >
+   <!--  <form class="form-inline my-2 my-lg-0" style="margin-right:30%" >
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    </form> -->
     
+      <form class="form-inline my-2 my-lg-0" style="margin-right:30%" action="/index" method="get">
+      <input class="form-control mr-sm-2" type="text"  name="key" value="${key}" placeholder="从es索引库来搜索" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+    </form>
     <div>
     	<ul class="nav">
     		<li class="nav-item nav-link"> <img width="55px" height="55px" src="/resource/images/1464850160368.jpg"> </li>

@@ -176,6 +176,10 @@ public interface ArtcleService {
 	int[] selectCategoryId(int random);
 
 	
+	//es 查询
+	List<Acticle> esFind(String estitle);
+
+	
 	
 
 	

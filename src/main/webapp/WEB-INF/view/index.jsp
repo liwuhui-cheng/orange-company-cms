@@ -152,7 +152,7 @@ body {
 					  <ul class="pagination ">
 					  
 					    <li class="page-item">
-					      <a class="page-link" href="/index?pageNum=${articlePage.pageNum-1}" aria-label="Previous">
+					      <a class="page-link" href="/index?pageNum=${articlePage.pageNum-1}&key=${key}" aria-label="Previous">
 					        <span aria-hidden="true">&laquo;</span>
 					      </a>
 					    </li>
@@ -166,7 +166,7 @@ body {
 					  		
 					  		<!-- 非当前页码的处理 -->
 							<c:if test="${articlePage.pageNum!=index.index}">
-					    		<li class="page-item"><a class="page-link" href="/index?page=${index.index}"> ${index.index}</a></li>
+					    		<li class="page-item"><a class="page-link" href="/index?page=${index.index}&key=${key}"> ${index.index}</a></li>
 					  		</c:if>    
 					    
 					    

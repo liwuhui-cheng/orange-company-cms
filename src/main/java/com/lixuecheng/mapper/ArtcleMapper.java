@@ -152,6 +152,10 @@ public interface ArtcleMapper {
 	//
 	@Select("SELECT id   from cms_category  where channel_id=#{random}")
 	int[] selectCategoryId(int random);
+
+	
+	@Select("SELECT  *   FROM  cms_article  where  status=#{i}")
+	List<Acticle> findAllArticleWithStatus(int i);
 	
 	
 }

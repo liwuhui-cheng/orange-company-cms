@@ -3,10 +3,20 @@ package com.lixuecheng.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Acticle implements Serializable{
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
-	private Integer id;  //文章id
+//索引库的名字和类
+@Document(indexName = "cms_articles", type = "acticle")
+public class Acticle implements Serializable {
+	@Id
+	private Integer id; // 文章id
+	// 是否存储 搜索关键词的方式ik 字段类型text
+	@Field(analyzer = "ik_smart", index = true, store = true, searchAnalyzer = "ik_smart", type = FieldType.text)
 	private String title;// 标题
+	@Field(analyzer="ik_smart",index=true,store=true,searchAnalyzer="ik_smart",type=FieldType.text)
 	private String content;// 文章的内容
 	private String picture;// 图片的url
 	private int channelId;// 栏目 频道
@@ -21,12 +31,11 @@ public class Acticle implements Serializable{
 	private int commentCnt; // 评论数量
 	private int articleType; // 文章的类型 文字0, 图片 1
 
-	
-	private  Channel   channel;  //频道，栏目
-	
-	private  Category  category;  //分类
-	
-	private  User   user; //用户
+	private Channel channel; // 频道，栏目
+
+	private Category category; // 分类
+
+	private User user; // 用户
 
 	public Integer getId() {
 		return id;
@@ -205,7 +214,5 @@ public class Acticle implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

@@ -5,16 +5,22 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
+import com.lixuecheng.common.HLUtils;
 import com.lixuecheng.entity.Acticle;
 import com.lixuecheng.entity.Category;
 import com.lixuecheng.entity.Channel;
 import com.lixuecheng.entity.Slide;
+import com.lixuecheng.mapper.ArticleRep;
 import com.lixuecheng.service.ArtcleService;
 
 @Controller
@@ -26,6 +32,81 @@ public class IndexController {
 	@Autowired
 	RedisTemplate   redisTemplate;
 	 
+	
+	@Autowired  //注入es仓库
+	ArticleRep  articleRep;
+	
+	
+	@Autowired
+	ElasticsearchTemplate  elasticsearchTemplate;
+	
+	
+	//es搜索的功能-======================================
+	@GetMapping("index")
+	public   String    search(String  key,Model model,HttpServletRequest request,@RequestParam(defaultValue="1")int page) {
+		
+		Thread t1 = new Thread() {
+
+			@Override
+			public void run() {
+				//获取所有的栏目
+				List<Channel> channels = artcleService.getChannel();
+				request.setAttribute("channels", channels);
+			}
+		};
+		
+		t1.start();
+		
+		Thread t3 = new Thread() {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public void run() {
+
+				// 获取最新文章
+				
+				//0:redis作为缓存优化最新文章
+                     
+				
+				//1:从redis查询最新文章
+				List<Acticle> range = redisTemplate.opsForList().range("new_articles", 0, -1);
+				//2：判断redis中查询的是否为空
+				if(range==null || range.size()==0) {
+			    	 
+					//3:如果为空,从mysql中查询最新文章
+					List<Acticle> lastArticle = artcleService.lastList();
+					System.out.println("从mysql中查询了...........");
+					redisTemplate.opsForList().leftPushAll("new_articles", lastArticle.toArray());
+					request.setAttribute("lastArticle", lastArticle);
+
+					
+					//4:如果不为空,直接返回前台
+			     }else {
+			    	 System.out.println("从redis查询了...............");
+						request.setAttribute("lastArticle", range);
+
+			     }
+			}
+		};
+		t3.start();
+		
+		//利用es的仓库来查询（无高亮）
+//		List<Acticle> findByTitle = articleRep.findByTitle(key);
+//	    
+//		PageInfo<Acticle> pageInfo = new  PageInfo<>(findByTitle);
+//		
+//		model.addAttribute("articlePage", pageInfo);
+	     
+		
+		//利用es  实现高亮highLight
+		PageInfo<Acticle> pageInfo2= (PageInfo<Acticle>) HLUtils.findByHighLight(elasticsearchTemplate, Acticle.class,page,2, new String[] {"title"},"id", key);
+		model.addAttribute("articlePage", pageInfo2);
+		model.addAttribute("key", key);
+		
+		return "index";
+	}
+	
+	
 	
 	@RequestMapping(value= {"index","/"})
 	public String index(HttpServletRequest request, @RequestParam(defaultValue = "1") int page) throws Exception {
@@ -73,6 +154,7 @@ public class IndexController {
 					redisTemplate.opsForList().leftPushAll("new_articles", lastArticle.toArray());
 					request.setAttribute("lastArticle", lastArticle);
 
+					
 					//4:如果不为空,直接返回前台
 			     }else {
 			    	 System.out.println("从redis查询了...............");

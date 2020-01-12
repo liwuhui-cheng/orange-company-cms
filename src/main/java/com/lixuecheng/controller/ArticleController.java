@@ -7,10 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,12 +26,15 @@ import com.github.pagehelper.PageInfo;
 import com.lixuecheng.common.CmsContant;
 import com.lixuecheng.common.CmsError;
 import com.lixuecheng.common.CmsMessage;
+import com.lixuecheng.common.HLUtils;
 import com.lixuecheng.entity.Acticle;
+import com.lixuecheng.entity.Channel;
 import com.lixuecheng.entity.Comment;
 import com.lixuecheng.entity.Commpan;
 import com.lixuecheng.entity.Complain;
 import com.lixuecheng.entity.Condtion;
 import com.lixuecheng.entity.User;
+import com.lixuecheng.mapper.ArticleRep;
 import com.lixuecheng.service.ArtcleService;
 import com.lixuecheng.test.FileUtils;
 
@@ -38,7 +44,9 @@ public class ArticleController extends BaseController {
 
 	@Autowired
 	ArtcleService artcleService;
-
+    
+	
+	
 	/**
 	 * 
 	 * @param id
@@ -276,5 +284,7 @@ public class ArticleController extends BaseController {
 		request.setAttribute("com", com);
 	  	return  "report/ts";
 	}
-
+	
+	
+	
 }
